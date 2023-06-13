@@ -1,0 +1,44 @@
+double S[3][3];
+double quart[4][4];
+
+enum {X, Y, Z};
+
+for (j = 0; j < 3; j++)
+{
+    S[j][X] = 0.0;
+    S[j][Y] = 0.0;
+    S[j][Z] = 0.0;
+
+    for (k=0; k < 3; k++)
+    {
+      for (i=0; i < N_TARGET_ATOMS; i++)
+      {
+        target = TARGET_ATOMS[i];
+
+        S[j][k] = S[j][k] + CRD2[target][j] * CRD1[i][k];
+
+        //printf("\n   %d  %d target %d %9.6lf  %9.6lf  %9.6lf  %9.6lf ",j,k, target,S[j][k], CRD[target][j] * ref_atoms[i][k], CRD[target][j], ref_atoms[i][k] );
+      }
+    }
+}
+
+      // build quarternion matrix
+      quart[0][0] =  S[X][X] + S[Y][Y] + S[Z][Z];
+      quart[0][1] =  S[Y][Z] - S[Z][Y];
+      quart[0][2] =  S[Z][X] - S[X][Z];
+      quart[0][3] =  S[X][Y] - S[Y][X];
+
+      quart[1][0] =  S[Y][Z] - S[Z][Y];
+      quart[1][1] =  S[X][X] - S[Y][Y] - S[Z][Z];
+      quart[1][2] =  S[X][Y] + S[Y][X];
+      quart[1][3] =  S[X][Z] + S[Z][X];
+
+      quart[2][0] =  S[Z][X] - S[X][Z];
+      quart[2][1] =  S[X][Y] + S[Y][X];
+      quart[2][2] = -S[X][X] + S[Y][Y] - S[Z][Z];
+      quart[2][3] =  S[Y][Z] + S[Z][Y];
+
+      quart[3][0] =  S[X][Y] - S[Y][X];
+      quart[3][1] =  S[X][Z] + S[Z][X];
+      quart[3][2] =  S[Y][Z] + S[Z][Y];
+      quart[3][3] = -S[X][X] - S[Y][Y] + S[Z][Z];
