@@ -48,18 +48,12 @@ int main(int argc, char *argv[])
   char title2[256];
   char element1[5];
   char element2[5];
-  double x_1 = 0.0;
-  double y_1 = 0.0;
-  double z_1 = 0.0;
-  double x_2 = 0.0;
-  double y_2 = 0.0;
-  double z_2 = 0.0;
-  double centered_x_1 = 0.0;
-  double centered_x_2 = 0.0;
-  double centered_y_1 = 0.0;
-  double centered_y_2 = 0.0;
-  double centered_z_1 = 0.0;
-  double centered_z_2 = 0.0;
+  double x1 = 0.0;
+  double y1 = 0.0;
+  double z1 = 0.0;
+  double x2 = 0.0;
+  double y2 = 0.0;
+  double z2 = 0.0;
   double new_x = 0.0;
   double new_y = 0.0;
   double new_z = 0.0;
@@ -101,19 +95,12 @@ int main(int argc, char *argv[])
     // reading and writing of the coordinate lines
     while (fgets(line1, sizeof(line1), input_file1) != NULL && fgets(line2, sizeof(line2), input_file2) != NULL)
     {
-      sscanf(line1, "%s %lf %lf %lf", element1, &x_1, &y_1, &z_1);
-      sscanf(line2, "%s %lf %lf %lf", element2, &x_2, &y_2, &z_2);
+      sscanf(line1, "%s %lf %lf %lf", element1, &x1, &y1, &z1);
+      sscanf(line2, "%s %lf %lf %lf", element2, &x2, &y2, &z2);
 
-      centered_x_1 = (x_1 - lattice_x_1 * round(x_1 / lattice_x_1));
-      centered_x_2 = (x_2 - lattice_x_2 * round(x_2 / lattice_x_2));
-      centered_y_1 = (y_1 - lattice_y_1 * round(y_1 / lattice_y_1));
-      centered_y_2 = (y_2 - lattice_y_2 * round(y_2 / lattice_y_2));
-      centered_z_1 = (z_1 - lattice_z_1 * round(z_1 / lattice_z_1));
-      centered_z_2 = (z_2 - lattice_z_2 * round(z_2 / lattice_z_2));
-
-      new_x = centered_x_1 + (i / n) * ((centered_x_2 - centered_x_1) - lattice_x_1 * round((centered_x_2 - centered_x_1) / lattice_x_1));
-      new_y = centered_y_1 + (i / n) * ((centered_y_2 - centered_y_1) - lattice_y_1 * round((centered_y_2 - centered_y_1) / lattice_y_1));
-      new_z = centered_z_1 + (i / n) * ((centered_z_2 - centered_z_1) - lattice_z_1 * round((centered_z_2 - centered_z_1) / lattice_z_1));
+      new_x = x1 + (i / n) * (x2 - x1);
+      new_y = y1 + (i / n) * (y2 - y1);
+      new_z = z1 + (i / n) * (z2 - z1);
 
       fprintf(output_file, "%s   %-13.9lf     %-13.9lf     %-13.9lf\n", element1, new_x, new_y, new_z);
     }
